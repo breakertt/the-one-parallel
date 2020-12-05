@@ -1,4 +1,4 @@
-package splitutil
+package rebuildutil
 
 import (
 	"bytes"
@@ -8,8 +8,6 @@ import (
 )
 
 type Scenario struct {
-	Start   int
-	End     int
 	Path    string
 	Content []byte
 }
@@ -61,25 +59,5 @@ func (s *Scenario) fmtContent(srcContent []byte) error {
 }
 
 func (s *Scenario) saveContent() error {
-	return nil
-}
-
-func LoadInputScenario() error {
-	if err := DefaultSceCtrl.SceSrc.readContent(); err != nil {
-		return err
-	}
-
-	DefaultSceCtrl.SceFmt = DefaultSceCtrl.SceSrc
-	DefaultSceCtrl.SceFmt.fmtContent(DefaultSceCtrl.SceSrc.Content)
-
-	// fmt.Print(string(DefaultSceCtrl.SceFmt.Content))
-	if err := SetupSetCtrl(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func GenScenarios() error {
 	return nil
 }
