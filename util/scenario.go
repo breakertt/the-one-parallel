@@ -34,7 +34,7 @@ func (s *Scenario) fmtContent(srcContent []byte) error {
 	copy(content, srcContent)
 
 	// Delte CRLF newline
-	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+	content = bytes.ReplaceAll(content, []byte("\r"), []byte("\n"))
 
 	// Delete space
 	content = bytes.ReplaceAll(content, []byte(" "), []byte(""))

@@ -18,6 +18,7 @@ type Config struct {
 	}
 	ScenarioFile string
 	ScenarioName string
+	MaxParallel  int
 }
 
 var CurrentConfig Config
