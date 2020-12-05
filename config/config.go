@@ -14,20 +14,22 @@ type Config struct {
 		StartIndex int
 		EndIndex   int
 	}
-	ConfigFile string
+	ScenarioFile string
 }
 
 var CurrentConfig Config
 
-var ErrorInvalidIndex = errors.New("Invalid index range")
-var ErrorInvalidConfigFile = errors.New("Invalid config file")
+var (
+	ErrorInvalidIndex        = errors.New("Invalid index range")
+	ErrorInvalidScenarioFile = errors.New("Invalid config file")
+)
 
 func (c *Config) ValidateParseConfig() error {
 	if err := c.parseIndex(); err != nil {
 		return err
 	}
 
-	if err := c.isConfigFileExist(); err != nil {
+	if err := c.isScenarioFileExist(); err != nil {
 		return err
 	}
 
@@ -71,9 +73,9 @@ func (c *Config) parseIndex() error {
 	return nil
 }
 
-func (c *Config) isConfigFileExist() error {
-	if _, err := os.Stat(c.ConfigFile); err != nil {
-		return fmt.Errorf("%v: %v", ErrorInvalidConfigFile, err)
+func (c *Config) isScenarioFileExist() error {
+	if _, err := os.Stat(c.ScenarioFile); err != nil {
+		return fmt.Errorf("%v: %v", ErrorInvalidScenarioFile, err)
 	}
 	return nil
 }
