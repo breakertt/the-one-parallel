@@ -2,6 +2,8 @@
 
 The one parallel is an easy to use high-performance launcher for [the-one](https://github.com/akeranen/the-one).
 
+**Windows support only now, Linux coming soon.**
+
 ## Intro
 
 This launcher is design to run multiple instances of the-one simulation, using up your CPU resource to get results faster. It is not "dark magic" but a very simple tool, hope you can enjoy it.
