@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -15,6 +17,7 @@ type Config struct {
 		EndIndex   int
 	}
 	ScenarioFile string
+	ScenarioName string
 }
 
 var CurrentConfig Config
@@ -30,6 +33,10 @@ func (c *Config) ValidateParseConfig() error {
 	}
 
 	if err := c.isScenarioFileExist(); err != nil {
+		return err
+	}
+
+	if err := c.setupName(); err != nil {
 		return err
 	}
 
@@ -76,6 +83,14 @@ func (c *Config) parseIndex() error {
 func (c *Config) isScenarioFileExist() error {
 	if _, err := os.Stat(c.ScenarioFile); err != nil {
 		return fmt.Errorf("%v: %v", ErrorInvalidScenarioFile, err)
+	}
+	return nil
+}
+
+func (c *Config) setupName() error {
+	if c.ScenarioName == "default_settings" {
+		basename := path.Base(c.ScenarioFile)
+		c.ScenarioName = strings.TrimSuffix(basename, filepath.Ext(basename))
 	}
 	return nil
 }

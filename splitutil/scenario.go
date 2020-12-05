@@ -64,7 +64,7 @@ func (s *Scenario) saveContent() error {
 	return nil
 }
 
-func GenScenarios() error {
+func LoadInputScenario() error {
 	if err := DefaultSceCtrl.SceSrc.readContent(); err != nil {
 		return err
 	}
@@ -77,5 +77,9 @@ func GenScenarios() error {
 		return err
 	}
 
+	return nil
+}
+
+func GenScenarios() error {
 	return nil
 }

@@ -1,4 +1,6 @@
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/imaginebreake/the-one-multi-thread v0.0.0-20201205074426-8cdfc8865d9c h1:BWUL5qH/+58KDokZdYRbGl4882nAK9ZeSdXC8tzI3lk=
+github.com/imaginebreake/the-one-multi-thread v0.0.0-20201205074426-8cdfc8865d9c/go.mod h1:bqVMnUbKED0kZyncMCtBoDiFRf3uF8Y74hyBQFy+kSo=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/sirupsen/logrus v1.7.0 h1:ShrD1U9pZB12TX0cVy0DtePoCH97K8EtX+mg7ZARUtM=
 github.com/sirupsen/logrus v1.7.0/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=

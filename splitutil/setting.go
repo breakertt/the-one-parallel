@@ -3,71 +3,68 @@ package splitutil
 import (
 	"fmt"
 	"strings"
+
+	"github.com/imaginebreake/the-one-parallel/config"
 )
 
 type SettingCtrl struct {
-	SceNamePrefix string
-	MaxIndex      int
-	Content       []string
-	Keys          []string
-	Settings      map[string]setting
-	SavePathBase  string
+	Name         string
+	Content      []string
+	Keys         []string
+	Settings     map[string]setting
+	SavePathBase string
 }
 
 type setting struct {
-	key         string
-	values      []string
-	lineContent string
-	lineNum     int
+	key     string
+	values  []string
+	content string
 }
 
 var DefaultSetCtrl SettingCtrl
 
 func SetupSetCtrl() error {
-	DefaultSetCtrl.MaxIndex = 1
-
-	contentBytes := DefaultSceCtrl.SceFmt.Content
-	DefaultSetCtrl.Content = strings.Split(string(contentBytes), "\n")
+	DefaultSetCtrl.Name = config.CurrentConfig.ScenarioName
+	DefaultSetCtrl.Settings = make(map[string]setting)
+	DefaultSetCtrl.Content = strings.Split(string(DefaultSceCtrl.SceFmt.Content), "\n")
 
 	DefaultSetCtrl.AnalyzeContent()
+
 	return nil
 }
 
 func (c *SettingCtrl) AnalyzeContent() error {
-	lineNum := 0
 	for _, line := range c.Content {
 		if strings.Contains(line, "=") {
 			kv := strings.Split(string(line), "=")
 			if len(kv) != 2 {
 				return fmt.Errorf("Invalid setting: %v", line)
 			}
-
-			var tmpSetting setting
-
-			tmpSetting.lineNum = lineNum
-			lineNum++
-
-			tmpSetting.key = kv[0]
-
-			value := kv[1]
-			if strings.Contains(value, "[") && strings.Contains(value, "]") {
-				value = strings.ReplaceAll(value, "[", "")
-				value = strings.ReplaceAll(value, "]", "")
-				values := strings.Split(value, ";")
-				fmt.Println(len(values))
-			} else {
-
+			c.Settings[kv[0]] = setting{
+				key:     kv[0],
+				values:  SplitValue(kv[1]),
+				content: line,
 			}
-
-		} else {
-			continue
+			c.Keys = append(c.Keys, kv[0])
 		}
 	}
 	return nil
 }
 
-// func (c *SettingCtrl) SetupSceneName() error {
-// 	basename := path.Base(DefaultSceCtrl.SceSrc.Path)
-// 	name := strings.TrimSuffix(basename, filepath.Ext(basename))
-// 	return nil
-// }
+func SplitValue(value string) []string {
+	var values []string
+	if strings.Contains(value, "[") && strings.Contains(value, "]") {
+		value = strings.ReplaceAll(value, "[", "")
+		value = strings.ReplaceAll(value, "]", "")
+		valuesTmp := strings.Split(value, ";")
+
+		for _, value := range valuesTmp {
+			if value != "" {
+				values = append(values, value)
+			}
+		}
+	} else {
+		values = append(values, value)
+	}
+	return values
+}
