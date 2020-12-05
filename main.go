@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/imaginebreake/the-one-multi-thread/config"
-	"github.com/imaginebreake/the-one-multi-thread/splitutil"
+	"github.com/imaginebreake/the-one-parallel/config"
+	"github.com/imaginebreake/the-one-parallel/splitutil"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,7 +16,7 @@ func init() {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stdout, "\nUsage %s\n\n", "the-one-multi-thread")
+	fmt.Fprintf(os.Stdout, "\nUsage %s\n\n", "the-one-parallel")
 	flag.PrintDefaults()
 	os.Exit(0)
 }
@@ -29,7 +29,7 @@ func main() {
 		logrus.Fatal(err)
 	}
 
-	splitutil.DefaultSceCtl.SceSrc = splitutil.Scenario{
+	splitutil.DefaultSceCtrl.SceSrc = splitutil.Scenario{
 		Start: config.CurrentConfig.IndexRange.StartIndex,
 		End:   config.CurrentConfig.IndexRange.EndIndex,
 		Path:  config.CurrentConfig.ScenarioFile,

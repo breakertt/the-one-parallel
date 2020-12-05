@@ -1,1 +1,1 @@
-# the-one-multi-thread
+# the-one-parallel

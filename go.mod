@@ -1,4 +1,4 @@
-module github.com/imaginebreake/the-one-multi-thread
+module github.com/imaginebreake/the-one-parallel
 
 go 1.15
 
