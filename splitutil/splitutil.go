@@ -3,6 +3,7 @@ package splitutil
 import (
 	"fmt"
 	"io/ioutil"
+	"regexp"
 )
 
 type Scenario struct {
@@ -27,7 +28,19 @@ func (s *Scenario) readContent() error {
 	if s.Content, err = ioutil.ReadFile(s.Path); err != nil {
 		return fmt.Errorf("Scnario file %v read error: %v", s.Path, err)
 	}
-	fmt.Println(s.Content)
+	return nil
+}
+
+func (s *Scenario) fmtContent(srcContent []byte) error {
+	// Delete comment lines
+	commentRe := regexp.MustCompile(`#.*(\r\n|\n)`)
+	content := commentRe.ReplaceAll(srcContent, []byte(""))
+
+	// Delte back-slash
+	backslashRe := regexp.MustCompile(`\\( |\t)*(\r\n|\n)( |\t)*`)
+	content = backslashRe.ReplaceAll(content, []byte(""))
+
+	fmt.Print(string(content))
 	return nil
 }
 
@@ -39,7 +52,10 @@ func GenScenarios() error {
 	if err := DefaultSceCtl.SceSrc.readContent(); err != nil {
 		return err
 	}
-	fmt.Printf("%v", string(DefaultSceCtl.SceSrc.Content))
-	return nil
 
+	DefaultSceCtl.SceFmt = DefaultSceCtl.SceSrc
+	DefaultSceCtl.SceFmt.fmtContent(DefaultSceCtl.SceSrc.Content)
+
+	// fmt.Print(string(DefaultSceCtl.SceFmt.Content))
+	return nil
 }
