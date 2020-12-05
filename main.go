@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/imaginebreake/the-one-parallel/config"
-	"github.com/imaginebreake/the-one-parallel/rebuildutil"
+	"github.com/imaginebreake/the-one-parallel/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -30,21 +30,21 @@ func main() {
 		logrus.Fatal(err)
 	}
 
-	rebuildutil.DefaultSetCtrl.Start = config.CurrentConfig.IndexRange.StartIndex
-	rebuildutil.DefaultSetCtrl.End = config.CurrentConfig.IndexRange.EndIndex
-	rebuildutil.DefaultSceCtrl.SceSrc = rebuildutil.Scenario{
+	util.DefaultSetCtrl.Start = config.CurrentConfig.IndexRange.StartIndex
+	util.DefaultSetCtrl.End = config.CurrentConfig.IndexRange.EndIndex
+	util.DefaultSceCtrl.SceSrc = util.Scenario{
 		Path: config.CurrentConfig.ScenarioFile,
 	}
 
-	if err := rebuildutil.LoadInputScenario(); err != nil {
+	if err := util.LoadInputScenario(); err != nil {
 		logrus.Fatal(err)
 	}
 
-	if err := rebuildutil.GenScenarios(); err != nil {
+	if err := util.GenScenarios(); err != nil {
 		logrus.Fatal(err)
 	}
 
-	if err := rebuildutil.SaveScenarios(); err != nil {
+	if err := util.SaveScenarios(); err != nil {
 		logrus.Fatal(err)
 	}
 }

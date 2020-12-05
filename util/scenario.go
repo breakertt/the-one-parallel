@@ -1,9 +1,10 @@
-package rebuildutil
+package util
 
 import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"regexp"
 )
 
@@ -59,5 +60,8 @@ func (s *Scenario) fmtContent(srcContent []byte) error {
 }
 
 func (s *Scenario) saveContent() error {
+	if err := ioutil.WriteFile(s.Path, s.Content, os.ModePerm); err != nil {
+		return err
+	}
 	return nil
 }
